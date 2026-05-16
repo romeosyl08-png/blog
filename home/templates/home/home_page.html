@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Home Page</h1>
+
+    {% if user.is_authenticated %}
+        <p>Connected as {{ user.username }}</p>
+
+        <form method="POST" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+    {% else %}
+    
+        <p>You must login to create a post.</p>
+
+        <a href="{% url 'users:login' %}">Login</a>
+        
+        <a href="{% url 'users:register' %}">Register</a>
+    {% endif %}
+
+    <p><a href="{% url 'home:post_create' %}">Create Post</a></p>
+    {%for post in page_obj%}
+    <hr>
+        <h1>{{ post.title }}</h1>
+        <p>by {{ post.author.username }}</p>
+        <p><a href="{% url 'home:post_details' post.id %}">Read more</a></p>
+
+        {%empty%}
+            <p>No posts available.</p>
+    {%endfor%}
+  <div class="pagination">
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>
+        Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+
+  </div>
+
+</body>
+</html>
+

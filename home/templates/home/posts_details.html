@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>   
+    <small>{{ post.created_at }}</small>
+    <p>by {{ post.author.username }}</p>
+
+{% if user == post.author %}
+    <a href="{% url 'home:post_delete' post.pk %}">Delete</a>
+    <a href="{% url 'home:post_edit' post.pk %}">Edit</a>
+{% endif %}
+
+    <a href="{% url 'home:homepage' %}">Back</a>
+
+    <hr>
+    <a href="{% url 'home:homepage' %}">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Post</title>
+    <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+</head>
+<body>
+
+    <h1>Edit post</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Title</label>
+        <input type="text" name="title" value="{{ post.title }}">
+
+        <label>Content</label>
+        <textarea name="content">{{ post.content }}</textarea>
+
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+</html>
