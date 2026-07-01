@@ -15,7 +15,7 @@ def homepage(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'home/home.html', {
+    return render(request, 'home/home_page.html', {
         'page_obj': page_obj
     })
 
